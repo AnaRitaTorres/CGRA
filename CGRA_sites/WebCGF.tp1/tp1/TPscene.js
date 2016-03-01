@@ -23,6 +23,7 @@ TPscene.prototype.init = function (application) {
 	this.axis=new CGFaxis(this);
     //this.obj = new MyObject(this);
     this.cube = new MyUnitCube(this);
+    this.quad = new MyUnitCubeQuad(this);
     
 
 };
@@ -127,5 +128,18 @@ TPscene.prototype.display = function () {
 	
 	// ---- END Primitive drawing section
 	*/
-	this.cube.display();
+
+
+	//this.cube.display();
+
+	
+	
+	this.pushMatrix();
+	this.translate(2, 0, 0);
+	this.quad.display();
+	this.popMatrix();
+	this.quad.display();
+	
+	
+	
 };

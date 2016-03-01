@@ -45,7 +45,7 @@ serialInclude = function(a) {
 ;
 serialInclude.l = new Array();
 
-serialInclude(['../lib/CGF.js', 'MyObject.js', 'TPscene.js', 'MyUnitCube.js',
+serialInclude(['../lib/CGF.js', 'MyObject.js', 'TPscene.js', 'MyUnitCube.js', 'MyQuad.js', 'MyUnitCubeQuad.js',
 
 main = function() 
 {
