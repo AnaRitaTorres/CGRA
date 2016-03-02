@@ -21,9 +21,11 @@ TPscene.prototype.init = function (application) {
     this.gl.depthFunc(this.gl.LEQUAL);
 
 	this.axis=new CGFaxis(this);
-    //this.obj = new MyObject(this);
+    this.obj = new MyObject(this);
     this.cube = new MyUnitCube(this);
     this.quad = new MyUnitCubeQuad(this);
+    this.table = new myTable(this);
+    this.floor = new myFloor(this);
     
 
 };
@@ -113,33 +115,50 @@ TPscene.prototype.display = function () {
 
 	// ---- END Geometric transformation section
 	*/
-	/*
+	
 	// ---- BEGIN Primitive drawing section
+	//this.pushMatrix();
+	//this.translate(0, 5, 0);
+	//this.popMatrix();
+	//this.obj.display();
+
+	
+	//this.rotate(Math.PI*30/180, 0, 1, 0);
+	
+	//exercicio 3.5
+	/*
 	this.pushMatrix();
 	this.translate(0, 5, 0);
-	this.popMatrix();
 	this.obj.display();
-
-	this.translate(5, 0, 2);
-	//this.rotate(Math.PI*30/180, 0, 1, 0);
+	this.popMatrix();
 	this.scale(5, 2, 1);
+	this.translate(5, 0, 2);
+	this.obj.display();
+	*/
 	
-	//this.obj.display();
+	
 	
 	// ---- END Primitive drawing section
-	*/
+	
 
 
 	//this.cube.display();
-
+	//this.quad.display();
 	
-	
+	//exercicio 4.10
+	/*
 	this.pushMatrix();
 	this.translate(2, 0, 0);
 	this.quad.display();
 	this.popMatrix();
 	this.quad.display();
-	
+	*/
+
+	this.pushMatrix();
+	this.translate(4, 0, 3);
+	this.table.display();
+	this.floor.display();
+	this.popMatrix();
 	
 	
 };

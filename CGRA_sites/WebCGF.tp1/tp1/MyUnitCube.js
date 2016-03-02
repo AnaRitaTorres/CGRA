@@ -41,10 +41,6 @@ MyUnitCube.prototype.initBuffers = function () {
             6, 5, 0
 
 
-
-
-
-
         ];
 		
 	this.primitiveType=this.scene.gl.TRIANGLES;
