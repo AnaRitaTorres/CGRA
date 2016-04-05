@@ -72,6 +72,7 @@ LightingScene.prototype.display = function() {
 	this.updateProjectionMatrix();
 	this.loadIdentity();
 
+	
 	// Apply transformations corresponding to the camera position relative to the origin
 	this.applyViewMatrix();
 

@@ -28,6 +28,7 @@ LightingScene.prototype.init = function(application) {
 
 	this.axis = new CGFaxis(this);
 
+	
 	// Scene elements
 	this.table = new MyTable(this);
 	this.wall = new Plane(this);

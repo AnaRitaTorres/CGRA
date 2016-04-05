@@ -12,6 +12,7 @@ function myLamp(scene, slices, stacks)
 
  	this.initBuffers();
  };
+ 
 
  myLamp.prototype = Object.create(CGFobject.prototype);
  myLamp.prototype.constructor = myLamp;
