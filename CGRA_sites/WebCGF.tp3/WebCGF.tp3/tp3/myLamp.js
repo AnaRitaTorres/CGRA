@@ -1,9 +1,9 @@
 /**
- * MyCylinder
+ * myLamp
  * @constructor
  */
 
-function MyCylinder(scene, slices, stacks) 
+function myLamp(scene, slices, stacks) 
  {
  	CGFobject.call(this,scene);
 	
@@ -13,34 +13,29 @@ function MyCylinder(scene, slices, stacks)
  	this.initBuffers();
  };
 
- MyCylinder.prototype = Object.create(CGFobject.prototype);
- MyCylinder.prototype.constructor = MyCylinder;
+ myLamp.prototype = Object.create(CGFobject.prototype);
+ myLamp.prototype.constructor = myLamp;
 
- MyCylinder.prototype.initBuffers = function() 
+ myLamp.prototype.initBuffers = function() 
  {
- 	/*
- 	* TODO:
- 	* Replace the following lines in order to build a prism with a **single mesh**.
- 	*
- 	* How can the vertices, indices and normals arrays be defined to
- 	* build a prism with varying number of slices and stacks?
- 	*/
-
  	this.vertices =[];
 
  	this.indices =[];
 
  	this.normals =[];
-
-	var angle = 2*Math.PI/this.slices;
+	
+	var phi = Math.PI/2/this.stacks;
+	var beta = 2*Math.PI/this.slices;
+	//hpi = 90º
+	var hpi = Math.PI/2;
 	
 	for (var i=0; i <= this.stacks;i++)
 	{
 		for ( var j=0; j < this.slices;j++)
 		{
 			//vertices e normais
-			this.vertices.push(Math.cos(angle*j),Math.sin(angle*j),i/this.stacks);
-			this.normals.push(Math.cos(angle*j),Math.sin(angle*j),0);
+			this.vertices.push(Math.sin(hpi-i*phi)*Math.cos(j*beta), Math.sin(hpi-i*phi)*Math.sin(j*beta), Math.cos(hpi-i*phi));
+			this.normals.push(Math.sin(hpi-i*phi)*Math.cos(j*beta), Math.sin(hpi-i*phi)*Math.sin(j*beta), Math.cos(hpi-i*phi));
 		}
 	}
 	
