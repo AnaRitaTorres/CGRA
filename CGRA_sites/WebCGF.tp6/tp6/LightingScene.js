@@ -44,7 +44,7 @@ LightingScene.prototype.init = function(application) {
 	this.floor = new MyQuad(this, 0, 1.5*10, 0, 1.0*12);
 	this.lwall = new MyQuad(this,1.5,-0.5,1.5,-0.5);
 	this.clock = new MyClock(this,12);
-	this.drone = new MyDrone(this);
+	this.drone = new MyDrone(this,7.5,6,7.5,-157);
 	
 	//tp 4
 	this.floorAppearance = new CGFappearance(this);
@@ -186,12 +186,7 @@ LightingScene.prototype.display = function() {
 
 
 	// ---- BEGIN Primitive drawing section
-	//Drone
-	this.pushMatrix();
-		this.translate(7.5, 6, 7.5);
-		this.rotate(-157 * degToRad,0,1,0);
-		this.drone.display();
-	this.popMatrix();
+	
 	
 	// Floor
 	this.pushMatrix();
@@ -256,6 +251,13 @@ LightingScene.prototype.display = function() {
 		this.translate(7,7.3,0);
 		this.scale(0.6,0.6,0.2);
 		this.clock.display();
+	this.popMatrix();
+	
+	//Drone
+	this.pushMatrix();
+		this.translate(this.drone.x, this.drone.y, this.drone.z);
+		this.rotate(this.drone.angle * degToRad,0,1,0);
+		this.drone.display();
 	this.popMatrix();
 	
 	// ---- END Primitive drawing section

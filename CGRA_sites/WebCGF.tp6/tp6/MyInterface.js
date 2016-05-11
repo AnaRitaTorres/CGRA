@@ -67,44 +67,41 @@ MyInterface.prototype.processKeyboard = function(event) {
 	// for better cross-browser support, you may also check suggestions on using event.which in http://www.w3schools.com/jsref/event_key_keycode.asp
 	switch (event.keyCode)
 	{
-		case (97):	
-			console.log("Key 'a' pressed");
+		case (97)://a
+			this.scene.drone.updatePosition(0,0,0,10);
 			break;
-		case (65):	
-			console.log("Key 'A' pressed");
+		case (65)://A
+			this.scene.drone.updatePosition(0,0,0,10);
 			break;
-		case(97):
-			console.log("Key 'a' pressed");
+		case(68)://D
+			this.scene.drone.updatePosition(0,0,0,-10);
 			break;
-		case(68):
-			console.log("Key 'D' pressed");
+		case(100)://d
+			this.scene.drone.updatePosition(0,0,0,-10);
 			break;
-		case(100):
-			console.log("Key 'd' pressed");
+		case(87)://W
+			this.scene.drone.updatePosition(0,0,-1,0);	
 			break;
-		case(87):
-			console.log("Key 'W' pressed");		
+		case(119)://w
+			this.scene.drone.updatePosition(0,0,-1,0);	
 			break;
-		case(119):
-			console.log("Key 'd' pressed");
+		case(83)://S
+			this.scene.drone.updatePosition(0,0,1,0);
 			break;
-		case(83):
-			console.log("Key 'S' pressed");
+		case(115)://s
+			this.scene.drone.updatePosition(0,0,1,0);
 			break;
-		case(115):
-			console.log("Key 's' pressed");
+		case(73)://I
+			this.scene.drone.updatePosition(0,1,0,0);
 			break;
-		case(73):
-			console.log("Key 'I' pressed");
+		case(105)://i
+			this.scene.drone.updatePosition(0,1,0,0);
 			break;
-		case(105):
-			console.log("Key 'i' pressed");
+		case(74)://J
+			this.scene.drone.updatePosition(0,-1,0,0);
 			break;
-		case(74):
-			console.log("Key 'J' pressed");
-			break;
-		case(106):
-			console.log("Key 'j' pressed");
+		case(106)://j
+			this.scene.drone.updatePosition(0,-1,0,0);
 			break;
 	};
 };
