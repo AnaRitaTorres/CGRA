@@ -286,6 +286,7 @@ LightingScene.prototype.display = function() {
 		this.clock.display();
 	this.popMatrix();
 	
+	this.materialDefault.apply();
 	//Drone
 	this.pushMatrix();
 		this.translate(this.drone.x, this.drone.y, this.drone.z);

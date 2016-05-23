@@ -15,7 +15,8 @@ function MyDrone(scene,x,y,z,angle)
 	this.z=z;
 	this.angle=angle;
 	
-	this.initBuffers();
+	this.cylinder = new MyCompleteCylinder(this.scene);
+	
 
 };
 
@@ -55,6 +56,31 @@ MyDrone.prototype.moveDown = function(a)
 	this.y -=(a/10);
 };
 
+
+MyDrone.prototype.display = function()
+{
+	this.scene.pushMatrix();
+		
+		this.scene.scale(0.21,0.21,3.5);
+		this.scene.translate(3.5/2, 0, 0);
+		this.cylinder.display();
+	this.scene.popMatrix();
+	
+	this.scene.pushMatrix();
+		
+		this.scene.scale(0.21,0.21,3.5);
+		this.scene.translate(3.5/2, 0, 0);
+		this.scene.rotate(90*degToRad, 0, 1, 0);
+		this.cylinder.display();
+	this.scene.popMatrix();
+
+	
+	
+}
+
+
+
+/*
 MyDrone.prototype.initBuffers = function ()
  {
 	this.vertices = [
@@ -68,7 +94,7 @@ MyDrone.prototype.initBuffers = function ()
 			2,1,0,
 			];
 		
-	this.primitiveType=this.scene.gl.TRIANGLES;
+	this.primitiveType=this.scene.gl.TRIANGLES*/
 	
 	/*this.normals = [
 			0,0,1,
@@ -78,6 +104,6 @@ MyDrone.prototype.initBuffers = function ()
 			];*/
 	
 	
-			
+	/*		
 	this.initGLBuffers();
-};
+};*/
