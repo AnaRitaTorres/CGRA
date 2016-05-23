@@ -3,6 +3,9 @@
  * @constructor
  */
 
+var degToRad = Math.PI / 180.0;
+
+ 
 function MyDrone(scene,x,y,z,angle) 
  {
  	CGFobject.call(this,scene);
@@ -16,15 +19,40 @@ function MyDrone(scene,x,y,z,angle)
 
 };
 
+
 MyDrone.prototype = Object.create(CGFobject.prototype);
 MyDrone.prototype.constructor=MyDrone;
 
-MyDrone.prototype.updatePosition = function(x,y,z,a)
+MyDrone.prototype.rotateRight = function(a)
 {
-	this.x = this.x + x;
-	this.y = this.y + y;
-	this.z = this.z + z;
-	this.angle = this.angle + a;
+	this.angle += a;
+};
+
+MyDrone.prototype.rotateLeft = function(a)
+{
+	this.angle -= a;
+};
+
+MyDrone.prototype.moveFoward = function(a)
+{
+	this.x += Math.sin(degToRad * this.angle)* (a/10);
+	this.z +=  Math.cos(degToRad * this.angle)* (a/10);
+};
+
+MyDrone.prototype.moveBackwards= function(a)
+{
+	this.x -= Math.sin(degToRad * this.angle)* (a/10);
+	this.z -=  Math.cos(degToRad * this.angle)*(a/10);
+};
+
+MyDrone.prototype.moveUp = function(a)
+{
+	this.y += (a/10);
+};
+
+MyDrone.prototype.moveDown = function(a)
+{
+	this.y -=(a/10);
 };
 
 MyDrone.prototype.initBuffers = function ()

@@ -13,10 +13,10 @@ function LightingScene() {
 LightingScene.prototype = Object.create(CGFscene.prototype);
 LightingScene.prototype.constructor = LightingScene;
 
-LightingScene.prototype.update = function(currTime) {
-	for (i = 0; i < this.lights.length; i++)
-		this.lights[i].update();
+LightingScene.prototype.update = function(currTime){
+	
 }
+
 
 LightingScene.prototype.init = function(application) {
 	CGFscene.prototype.init.call(this, application);
@@ -24,10 +24,16 @@ LightingScene.prototype.init = function(application) {
 	this.initCameras();
 
 	this.initLights();
+		
+	this.Light0=true;
+	this.Light1=true;
+	this.Light2=true;
+	this.Light3=true;
+	this.Light4=true;
 	
-	this.option1=true;
-	this.option2=false;
-	this.speed=3;
+	this.enableClock= true;
+	
+	this.speed = 3;
 	
 	this.gl.clearColor(0.0, 0.0, 0.0, 1.0);
 	this.gl.clearDepth(100.0);
@@ -44,7 +50,7 @@ LightingScene.prototype.init = function(application) {
 	this.floor = new MyQuad(this, 0, 1.5*10, 0, 1.0*12);
 	this.lwall = new MyQuad(this,1.5,-0.5,1.5,-0.5);
 	this.clock = new MyClock(this,12);
-	this.drone = new MyDrone(this,7.5,6,7.5,-157);
+	this.drone = new MyDrone(this,7.5,6,7.5,0);
 	
 	//tp 4
 	this.floorAppearance = new CGFappearance(this);
@@ -79,18 +85,11 @@ LightingScene.prototype.init = function(application) {
 	this.materialB.setSpecular(0.8,0.8,0.8,1);	
 	this.materialB.setShininess(120);
 	
-	//tp4
 	this.enableTextures(true);
-	
-	//tp5
+		
 	this.setUpdatePeriod(100);
 };
 
-
-LightingScene.prototype.doSomething = function()
-{
-	console.log("Doing something...");
-};
 
 LightingScene.prototype.initCameras = function() {
 	this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(30, 30, 30), vec3.fromValues(0, 0, 0));
@@ -102,25 +101,21 @@ LightingScene.prototype.initLights = function() {
 	// Positions for four lights
 	this.lights[0].setPosition(4, 6, 1, 1);
 	this.lights[0].setVisible(true); // show marker on light position (different from enabled)
-	
-	this.lights[1].setPosition(10.5, 6.0, 1.0, 1.0);
-	this.lights[1].setVisible(true); // show marker on light position (different from enabled)
-
-	this.lights[2].setPosition(10.5, 6.0, 5.0, 1.0);
-	this.lights[2].setVisible(true);
-
-	this.lights[3].setPosition(4, 6.0, 5.0, 1.0);
-	this.lights[3].setVisible(true); // show marker on light position (different from enabled)
-
 	this.lights[0].setAmbient(0, 0, 0, 1);
 	this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
 	this.lights[0].setSpecular(1.0,1.0,0,1.0);
 	this.lights[0].enable();
-
+	
+	
+	this.lights[1].setPosition(10.5, 6.0, 1.0, 1.0);
+	this.lights[1].setVisible(true); // show marker on light position (different from enabled)
 	this.lights[1].setAmbient(0, 0, 0, 1);
 	this.lights[1].setDiffuse(1.0, 1.0, 1.0, 1.0);
 	this.lights[1].enable();
+	
 
+	this.lights[2].setPosition(10.5, 6.0, 5.0, 1.0);
+	this.lights[2].setVisible(true);
 	this.lights[2].setAmbient(0, 0, 0, 1);
 	this.lights[2].setSpecular(1.0,1.0,1.0,1.0);
 	this.lights[2].setDiffuse(1.0, 1.0, 1.0, 1.0);  
@@ -128,8 +123,10 @@ LightingScene.prototype.initLights = function() {
 	this.lights[2].setLinearAttenuation(1.0);
 	this.lights[2].setQuadraticAttenuation(1.0);
 	this.lights[2].enable();
+	
 
-
+	this.lights[3].setPosition(4, 6.0, 5.0, 1.0);
+	this.lights[3].setVisible(true); // show marker on light position (different from enabled)
 	this.lights[3].setAmbient(0, 0, 0, 1);
 	this.lights[3].setDiffuse(1.0, 1.0, 1.0, 1.0);
 	this.lights[3].setSpecular(1.0,1.0,0,1.0);
@@ -137,21 +134,58 @@ LightingScene.prototype.initLights = function() {
 	this.lights[3].setLinearAttenuation(0);
 	this.lights[3].setQuadraticAttenuation(0.2);
 	this.lights[3].enable();
-	//tp4
+	
+	
 	this.lights[4].setPosition(0.1, 4, 7.5, 1.0);
 	this.lights[4].setVisible(true);
 	this.lights[4].setAmbient(0, 0, 0, 1);
 	this.lights[4].setDiffuse(1.0, 1.0, 1.0, 1.0);
 	this.lights[4].enable();
+	
 };
 
-LightingScene.prototype.updateLights = function() {
+LightingScene.prototype.updateLights = function(){
+	
 	for (i = 0; i < this.lights.length; i++)
 		this.lights[i].update();
+	
+	if(this.Light0 == true)
+	{
+		this.lights[0].enable();
+	}
+	else this.lights[0].disable();
+	
+	if(this.Light1 == true)
+	{
+		this.lights[1].enable();
+	}
+	else this.lights[1].disable();	
+	
+	if(this.Light2 == true)
+	{
+		this.lights[2].enable();
+	}
+	else this.lights[2].disable();
+	
+	if(this.Light3 == true)
+	{
+		this.lights[3].enable();
+	}
+	else this.lights[3].disable();
+	
+	if(this.Light4 == true)
+	{
+		this.lights[4].enable();
+	}
+	else this.lights[4].disable();
 }
 
-LightingScene.prototype.update = function(currTime) {
-	this.clock.update(currTime);
+LightingScene.prototype.update = function(currTime) 
+{
+	if(this.enableClock == true)
+	{
+		this.clock.update(currTime);
+	}
 }
 
 
@@ -245,8 +279,7 @@ LightingScene.prototype.display = function() {
 		this.boardB.display();
 	this.popMatrix();
 	
-	//tp5
-		//Clock
+	//Clock
 	this.pushMatrix();
 		this.translate(7,7.3,0);
 		this.scale(0.6,0.6,0.2);

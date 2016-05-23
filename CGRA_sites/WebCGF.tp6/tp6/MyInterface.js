@@ -30,19 +30,21 @@ MyInterface.prototype.init = function(application) {
 	// the identifier 'doSomething' must be a function declared as part of that object (i.e. a member of the scene class)
 	// e.g. LightingScene.prototype.doSomething = function () { console.log("Doing something..."); }; 
 
-	this.gui.add(this.scene, 'doSomething');	
-
 	// add a group of controls (and open/expand by defult)
 	
-	var group=this.gui.addFolder("Options");
+	var group=this.gui.addFolder("Lights");
 	group.open();
 
 	// add two check boxes to the group. The identifiers must be members variables of the scene initialized in scene.init as boolean
 	// e.g. this.option1=true; this.option2=false;
 	
-	group.add(this.scene, 'option1');
-	group.add(this.scene, 'option2');
+	group.add(this.scene, 'Light0');
+	group.add(this.scene, 'Light1');
+	group.add(this.scene, 'Light2');
+	group.add(this.scene, 'Light3');
+	group.add(this.scene, 'Light4');
 	
+	this.gui.add(this.scene,'enableClock');
 	// add a slider
 	// must be a numeric variable of the scene, initialized in scene.init e.g.
 	// this.speed=3;
@@ -68,40 +70,33 @@ MyInterface.prototype.processKeyboard = function(event) {
 	switch (event.keyCode)
 	{
 		case (97)://a
-			this.scene.drone.updatePosition(0,0,0,10);
-			break;
 		case (65)://A
-			this.scene.drone.updatePosition(0,0,0,10);
+			this.scene.drone.rotateLeft(this.scene.speed);
 			break;
+				
 		case(68)://D
-			this.scene.drone.updatePosition(0,0,0,-10);
-			break;
 		case(100)://d
-			this.scene.drone.updatePosition(0,0,0,-10);
+			this.scene.drone.rotateRight(this.scene.speed);
 			break;
+					
 		case(87)://W
-			this.scene.drone.updatePosition(0,0,-1,0);	
-			break;
 		case(119)://w
-			this.scene.drone.updatePosition(0,0,-1,0);	
+			this.scene.drone.moveFoward(this.scene.speed);
 			break;
+					
 		case(83)://S
-			this.scene.drone.updatePosition(0,0,1,0);
-			break;
 		case(115)://s
-			this.scene.drone.updatePosition(0,0,1,0);
+			this.scene.drone.moveBackwards(this.scene.speed);
 			break;
+			
 		case(73)://I
-			this.scene.drone.updatePosition(0,1,0,0);
-			break;
 		case(105)://i
-			this.scene.drone.updatePosition(0,1,0,0);
+			this.scene.drone.moveUp(this.scene.speed);
 			break;
+			
 		case(74)://J
-			this.scene.drone.updatePosition(0,-1,0,0);
-			break;
 		case(106)://j
-			this.scene.drone.updatePosition(0,-1,0,0);
+			this.scene.drone.moveDown(this.scene.speed);
 			break;
 	};
 };
