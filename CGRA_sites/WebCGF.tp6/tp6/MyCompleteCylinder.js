@@ -5,11 +5,11 @@
  */
 var degToRad = Math.PI / 180.0;
  
-function MyCompleteCylinder(scene) {
+function MyCompleteCylinder(scene, slices,stacks) {
 	CGFobject.call(this,scene);
     
-    this.cylinder = new MyCylinder(this.scene, 100, 1);
-	this.circle = new MyCircle(this.scene, 100);
+	this.cylinder = new MyCylinder(this.scene, slices, stacks);
+	this.circle = new MyCircle(this.scene, slices);
 	
 };
 

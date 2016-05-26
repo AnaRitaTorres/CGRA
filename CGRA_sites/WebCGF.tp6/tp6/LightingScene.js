@@ -13,10 +13,6 @@ function LightingScene() {
 LightingScene.prototype = Object.create(CGFscene.prototype);
 LightingScene.prototype.constructor = LightingScene;
 
-LightingScene.prototype.update = function(currTime){
-	
-}
-
 
 LightingScene.prototype.init = function(application) {
 	CGFscene.prototype.init.call(this, application);
@@ -75,10 +71,10 @@ LightingScene.prototype.init = function(application) {
 	this.droneAppearance4.loadTexture ("./images/azul.png");
 	
 	this.droneAppearanceList={};
-	this.droneAppearanceList['Fish'] = 0;
-	this.droneAppearanceList['Snake'] = 1;
-	this.droneAppearanceList['Crocodile'] = 2;
-	this.droneAppearanceList['Turtle'] = 3;
+	this.droneAppearanceList['Pink'] = 0;
+	this.droneAppearanceList['Green'] = 1;
+	this.droneAppearanceList['Blue'] = 2;
+	this.droneAppearanceList['Yellow'] = 3;
 	
 	this.droneAppearances = {};
 	this.droneAppearances[0] = this.droneAppearance1;
@@ -229,6 +225,8 @@ LightingScene.prototype.update = function(currTime)
 	{
 		this.clock.update(currTime);
 	}
+	
+	this.drone.moveUpdate();
 }
 
 

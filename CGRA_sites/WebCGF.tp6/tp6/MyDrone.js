@@ -15,14 +15,14 @@ function MyDrone(scene,x,y,z,angle)
 	this.z=z;
 	this.angle=angle;
 	
-	this.cylinder = new MyCompleteCylinder(this.scene);
+	this.cylinder = new MyCompleteCylinder(this.scene,100,1);
 	this.sphere = new myLamp(this.scene, 100, 100);
 	this.circle = new MyCircle(this.scene, 100);
 	this.halfc = new MyHalfCylinder(this.scene, 100, 100);
 	this.cube = new MyUnitCubeQuad(this.scene);
-	this.helix_front = new MyCompleteCylinder(this.scene, 20, 1);
-	this.helix_back = new MyCompleteCylinder(this.scene, 20, 1);
-	this.helix_sides = new MyCompleteCylinder(this.scene, 20, 1);
+	this.helix_front = new MyHelix(this.scene, 20, 1);
+	this.helix_back = new MyHelix(this.scene, 20, 1);
+	this.helix_sides = new MyHelix(this.scene, 20, 1);
 	
 	this.dealwithdoge = new CGFappearance(this.scene);
 	this.dealwithdoge.loadTexture("./images/doge.png");
@@ -65,6 +65,12 @@ MyDrone.prototype.moveDown = function(a)
 	this.y -=(a/10);
 };
 
+MyDrone.prototype.moveUpdate = function()
+{
+	this.helix_back.updateMove(1);
+	this.helix_front.updateMove(1);
+	this.helix_sides.updateMove(1);
+};
 
 MyDrone.prototype.display = function()
 {

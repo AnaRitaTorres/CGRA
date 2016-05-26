@@ -65,13 +65,13 @@ MyClock.prototype.update = function(currTime) {
 	
 	this.delta_time = currTime-this.last_time;
 	this.last_time = currTime;
-	
+	/*
 	if (this.first == 0)
 	{
 		this.delta_time = 0;
 		this.first = 1;
 	}
-	
+	*/
 	
 	this.seconds_pointer.setAngle(this.seconds_pointer.angle - degToRad*(360 / 60 * (this.delta_time / 1000)));
 	this.minutes_pointer.setAngle(this.minutes_pointer.angle - degToRad*(360 / (60*60) * (this.delta_time / 1000)));
