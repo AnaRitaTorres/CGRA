@@ -9,8 +9,8 @@ function MyTable(scene) {
 	this.cube = new MyUnitCubeQuad(this.scene);
     this.cube.initBuffers();
 	
-	this.tableAppearance = new CGFappearance(this.scene);
-	this.tableAppearance.loadTexture("./images/table.png");
+	//this.tableAppearance = new CGFappearance(this.scene);
+	//this.tableAppearance.loadTexture("./images/table.png");
 	
 	this.materialDefault = new CGFappearance(this.scene);
 };
@@ -25,13 +25,14 @@ MyTable.prototype.display = function()
     //tampo
     this.scene.translate(0, 3.5, 0);
     this.scene.scale(5, 0.3, 3);
-	this.tableAppearance.apply();
+	this.scene.tableAppearance.apply();
     this.cube.display();
 
     this.scene.popMatrix();
     this.scene.pushMatrix();
 
 	this.materialDefault.apply();
+	
 	//pernas
     this.scene.translate(2.35, 1.75, 1.35);
     this.scene.scale(0.3, 3.5, 0.3);

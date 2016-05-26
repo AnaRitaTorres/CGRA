@@ -27,7 +27,7 @@ function MyClock(scene,slices)
 	
 	this.last_time = 0;
 	this.delta_time = 0;
-	this.first = 0
+	this.first = 0;
 	
 	
  };

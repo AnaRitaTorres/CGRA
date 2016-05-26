@@ -19,7 +19,9 @@ MyCompleteCylinder.prototype.constructor=MyCompleteCylinder;
 
 MyCompleteCylinder.prototype.display = function()
 {
+	this.scene.droneAppearance2.apply();
 	this.cylinder.display();
+	this.scene.materialDefault.apply();
 	
 	this.scene.pushMatrix();
 		this.scene.translate(0, 0, 1);
@@ -30,7 +32,5 @@ MyCompleteCylinder.prototype.display = function()
 		this.scene.rotate(Math.PI, 0, 1, 0);
 		this.circle.display();
 	this.scene.popMatrix();
-	
-	
 	
 }

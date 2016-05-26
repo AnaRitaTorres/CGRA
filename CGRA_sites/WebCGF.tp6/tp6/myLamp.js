@@ -9,7 +9,7 @@ function myLamp(scene, slices, stacks)
 	
 	this.slices = slices;
 	this.stacks = stacks;
-
+	
  	this.initBuffers();
  };
  
@@ -25,6 +25,8 @@ function myLamp(scene, slices, stacks)
 
  	this.normals =[];
 	
+	this.texCoords =[];
+	
 	var phi = Math.PI/2/this.stacks;
 	var beta = 2*Math.PI/this.slices;
 	//hpi = 90º
@@ -37,6 +39,8 @@ function myLamp(scene, slices, stacks)
 			//vertices e normais
 			this.vertices.push(Math.sin(hpi-i*phi)*Math.cos(j*beta), Math.sin(hpi-i*phi)*Math.sin(j*beta), Math.cos(hpi-i*phi));
 			this.normals.push(Math.sin(hpi-i*phi)*Math.cos(j*beta), Math.sin(hpi-i*phi)*Math.sin(j*beta), Math.cos(hpi-i*phi));
+			
+			this.texCoords.push((this.slices-j)/this.slices, (this.stacks-i)/this.stacks);
 		}
 	}
 	
@@ -60,7 +64,8 @@ function myLamp(scene, slices, stacks)
 		}
 		
 	}
-			
+	
  	this.primitiveType = this.scene.gl.TRIANGLES;
  	this.initGLBuffers();
  };
+ 

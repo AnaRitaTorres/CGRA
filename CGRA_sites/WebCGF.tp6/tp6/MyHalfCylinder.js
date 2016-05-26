@@ -1,9 +1,9 @@
 /**
- * MyCylinder
+ * MyHalfCylinder
  * @constructor
  */
 
-function MyCylinder(scene, slices, stacks) 
+function MyHalfCylinder(scene, slices, stacks) 
  {
  	CGFobject.call(this,scene);
 	
@@ -13,28 +13,20 @@ function MyCylinder(scene, slices, stacks)
  	this.initBuffers();
  };
 
- MyCylinder.prototype = Object.create(CGFobject.prototype);
- MyCylinder.prototype.constructor = MyCylinder;
+ MyHalfCylinder.prototype = Object.create(CGFobject.prototype);
+ MyHalfCylinder.prototype.constructor = MyHalfCylinder;
 
- MyCylinder.prototype.initBuffers = function() 
+ MyHalfCylinder.prototype.initBuffers = function() 
  {
- 	/*
- 	* TODO:
- 	* Replace the following lines in order to build a prism with a **single mesh**.
- 	*
- 	* How can the vertices, indices and normals arrays be defined to
- 	* build a prism with varying number of slices and stacks?
- 	*/
-
+ 	
  	this.vertices =[];
 
  	this.indices =[];
 
  	this.normals =[];
 	
-	this.texCoords=[];
 
-	var angle = 2*Math.PI/this.slices;
+	var angle = 2*Math.PI/this.slices/2;
 	
 	for (var i=0; i <= this.stacks;i++)
 	{
@@ -43,8 +35,6 @@ function MyCylinder(scene, slices, stacks)
 			//vertices e normais
 			this.vertices.push(Math.cos(angle*j),Math.sin(angle*j),i/this.stacks);
 			this.normals.push(Math.cos(angle*j),Math.sin(angle*j),0);
-			
-			this.texCoords.push(j/this.slices, i/this.stacks);
 		}
 	}
 	
@@ -53,17 +43,23 @@ function MyCylinder(scene, slices, stacks)
 	{
 		var n = this.slices*i;
 		
-		for ( var j=0; j < this.slices;j++)
+		for ( var j=0; j < this.slices-1;j++)
 		{ 
 			if(j == this.slices -1)
 			{
 				this.indices.push(n+j, n+this.slices+j+1-this.slices,n+this.slices+j);
-				this.indices.push(n+j,n+j+1-this.slices, n+this.slices+j+1-this.slices);
+				this.indices.push(n+j, n+j+1-this.slices, n+this.slices+j+1-this.slices);
+				
+				this.indices.push(n+j, n+this.slices+j,  n+this.slices+j+1-this.slices);
+				this.indices.push(n+j, n+this.slices+j+1-this.slices, n+j+1-this.slices);
 			}
 			else
 			{
 				this.indices.push(n+j, n+this.slices+j+1,n+this.slices+j);
 				this.indices.push(n+j,n+j+1, n+this.slices+j+1);
+				
+				this.indices.push(n+j, n+this.slices+j, n+this.slices+j+1);
+				this.indices.push(n+j, n+this.slices+j+1, n+j+1);
 			}
 		}
 		

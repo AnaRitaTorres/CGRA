@@ -24,14 +24,14 @@ LightingScene.prototype.init = function(application) {
 	this.initCameras();
 
 	this.initLights();
-		
+	
+	this.enableClock= true;	
+	
 	this.Light0=true;
 	this.Light1=true;
 	this.Light2=true;
 	this.Light3=true;
 	this.Light4=true;
-	
-	this.enableClock= true;
 	
 	this.speed = 3;
 	
@@ -43,8 +43,10 @@ LightingScene.prototype.init = function(application) {
 
 	this.axis = new CGFaxis(this);
 
+	//Drone Appearance
+	var droneAppearances = [];//colocar no array as diversas appearances que o drone poderá ter
 	
-	// Scene elements
+	//Scene elements
 	this.table = new MyTable(this);
 	this.wall = new Plane(this);
 	this.floor = new MyQuad(this, 0, 1.5*10, 0, 1.0*12);
@@ -52,18 +54,59 @@ LightingScene.prototype.init = function(application) {
 	this.clock = new MyClock(this,12);
 	this.drone = new MyDrone(this,7.5,6,7.5,0);
 	
-	//tp 4
+	//Appearances
+	//Drone
+	
+	this.droneAppearance1 = new CGFappearance(this);
+	/*this.droneAppearance1.setAmbient(.5,.5,.5,1);
+	this.droneAppearance1.setDiffuse(1,1,1,1);	
+	this.droneAppearance1.setSpecular(1,1,1,1);
+	this.droneAppearance1.setShininess(500);*/
+	this.droneAppearance1.loadTexture("./images/amarelo.png");
+	this.droneAppearance1.setTextureWrap('CLAMP_TO_EDGE','CLAMP_TO_EDGE');
+	
+	this.droneAppearance2 = new CGFappearance(this);
+	this.droneAppearance2.loadTexture("./images/verde.png");
+	
+	this.droneAppearance3 = new CGFappearance(this);
+	this.droneAppearance3.loadTexture("./images/rosa.png");
+	
+	this.droneAppearance4 = new CGFappearance(this);
+	this.droneAppearance4.loadTexture ("./images/azul.png");
+	
+	this.droneAppearanceList={};
+	this.droneAppearanceList['Fish'] = 0;
+	this.droneAppearanceList['Snake'] = 1;
+	this.droneAppearanceList['Crocodile'] = 2;
+	this.droneAppearanceList['Turtle'] = 3;
+	
+	this.droneAppearances = {};
+	this.droneAppearances[0] = this.droneAppearance1;
+	this.droneAppearances[1] = this.droneAppearance2;
+	this.droneAppearances[2] = this.droneAppearance3;
+	this.droneAppearances[3] = this.droneAppearance4;
+	
+	this.currDroneAppearance= 0;
+	
+	
+	//Table
+	this.tableAppearance = new CGFappearance(this);
+	this.tableAppearance.loadTexture("./images/table.png");
+	//Floor
 	this.floorAppearance = new CGFappearance(this);
 	this.floorAppearance.loadTexture("./images/floor.png");
 	
+	//Window
 	this.windowAppearance = new CGFappearance(this);
 	this.windowAppearance.loadTexture("./images/window.png");
 	this.windowAppearance.setTextureWrap('CLAMP_TO_EDGE','CLAMP_TO_EDGE');
 	
+	//Slides
 	this.slidesAppearance = new CGFappearance(this);
 	this.slidesAppearance.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
 	this.slidesAppearance.loadTexture("./images/slides.png");
 	
+	//Boards
 	this.boardAppearance = new CGFappearance(this);
 	this.boardAppearance.loadTexture("./images/board.png");
 	
@@ -98,7 +141,7 @@ LightingScene.prototype.initCameras = function() {
 LightingScene.prototype.initLights = function() {
 	this.setGlobalAmbientLight(0,0,0, 1.0);
 	
-	// Positions for four lights
+	//Positions for lights
 	this.lights[0].setPosition(4, 6, 1, 1);
 	this.lights[0].setVisible(true); // show marker on light position (different from enabled)
 	this.lights[0].setAmbient(0, 0, 0, 1);
@@ -211,17 +254,7 @@ LightingScene.prototype.display = function() {
 
 	this.materialDefault.apply();
 
-	// ---- END Background, camera and axis setup
-
-	
-	// ---- BEGIN Geometric transformation section
-
-	// ---- END Geometric transformation section
-
-
-	// ---- BEGIN Primitive drawing section
-	
-	
+	//Geometric Tranformations	
 	// Floor
 	this.pushMatrix();
 		this.translate(7.5, 0, 7.5);
@@ -286,13 +319,15 @@ LightingScene.prototype.display = function() {
 		this.clock.display();
 	this.popMatrix();
 	
-	this.materialDefault.apply();
+	
+	
 	//Drone
 	this.pushMatrix();
 		this.translate(this.drone.x, this.drone.y, this.drone.z);
 		this.rotate(this.drone.angle * degToRad,0,1,0);
+		//this.droneAppearance1.apply();
 		this.drone.display();
 	this.popMatrix();
 	
-	// ---- END Primitive drawing section
+	
 };
