@@ -30,6 +30,7 @@ LightingScene.prototype.init = function(application) {
 	this.Light4=true;
 	
 	this.speed = 3;
+	this.scale_rotors = 1;
 	
 	this.gl.clearColor(0.0, 0.0, 0.0, 1.0);
 	this.gl.clearDepth(100.0);
@@ -48,7 +49,8 @@ LightingScene.prototype.init = function(application) {
 	this.floor = new MyQuad(this, 0, 1.5*10, 0, 1.0*12);
 	this.lwall = new MyQuad(this,1.5,-0.5,1.5,-0.5);
 	this.clock = new MyClock(this,12);
-	this.drone = new MyDrone(this,7.5,6,7.5,0);
+	this.drone = new MyDrone(this,7.5,6,7.5,180);
+	
 	
 	//Appearances
 	//Drone
@@ -70,18 +72,21 @@ LightingScene.prototype.init = function(application) {
 	this.droneAppearance4 = new CGFappearance(this);
 	this.droneAppearance4.loadTexture ("./images/azul.png");
 	
-	this.droneAppearanceList={};
-	this.droneAppearanceList['Pink'] = 0;
-	this.droneAppearanceList['Green'] = 1;
-	this.droneAppearanceList['Blue'] = 2;
-	this.droneAppearanceList['Yellow'] = 3;
 	
+	this.droneAppearanceList={};
+	this.droneAppearanceList['Doge'] = 0;
+	this.droneAppearanceList['Sonic'] = 1;
+	this.droneAppearanceList['Pepe'] = 2;
+	
+	//this.droneAppearanceList=['Doge', 'Sonic', 'Pepe'];
+	
+	
+	/*
 	this.droneAppearances = {};
 	this.droneAppearances[0] = this.droneAppearance1;
 	this.droneAppearances[1] = this.droneAppearance2;
 	this.droneAppearances[2] = this.droneAppearance3;
-	this.droneAppearances[3] = this.droneAppearance4;
-	
+	*/
 	this.currDroneAppearance= 0;
 	
 	
@@ -126,7 +131,7 @@ LightingScene.prototype.init = function(application) {
 	
 	this.enableTextures(true);
 		
-	this.setUpdatePeriod(100);
+	this.setUpdatePeriod(1);
 };
 
 
@@ -226,7 +231,7 @@ LightingScene.prototype.update = function(currTime)
 		this.clock.update(currTime);
 	}
 	
-	this.drone.moveUpdate();
+	this.drone.moveUpdate(currTime);
 }
 
 
@@ -326,6 +331,8 @@ LightingScene.prototype.display = function() {
 		//this.droneAppearance1.apply();
 		this.drone.display();
 	this.popMatrix();
+	
+
 	
 	
 };

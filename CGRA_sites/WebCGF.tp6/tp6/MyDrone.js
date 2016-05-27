@@ -24,9 +24,29 @@ function MyDrone(scene,x,y,z,angle)
 	this.helix_back = new MyHelix(this.scene, 20, 1);
 	this.helix_sides = new MyHelix(this.scene, 20, 1);
 	
-	this.dealwithdoge = new CGFappearance(this.scene);
-	this.dealwithdoge.loadTexture("./images/doge.png");
+	this.front_helix_speed = 1;
+	this.back_helix_speed = 1;
+	this.sides_helix_speed = -1;
 	
+	this.pitch_angle = 0;
+	
+	this.bodyTextures = {};
+	
+	this.doge = new CGFappearance(this.scene);
+	this.doge.loadTexture("./images/dogev2.png");
+	
+	this.sonic = new CGFappearance(this.scene);
+	this.sonic.loadTexture("./images/sonicv2.png");
+	
+	this.pepe = new CGFappearance(this.scene);
+	this.pepe.loadTexture("./images/pepev2.png");
+	
+	this.bodyTextures[0] = this.doge;
+	this.bodyTextures[1] = this.sonic;
+	this.bodyTextures[2] = this.pepe;
+	
+	this.texOption = 0;
+		
 };
 
 
@@ -35,12 +55,12 @@ MyDrone.prototype.constructor=MyDrone;
 
 MyDrone.prototype.rotateRight = function(a)
 {
-	this.angle += a;
+	this.angle -= a;
 };
 
 MyDrone.prototype.rotateLeft = function(a)
 {
-	this.angle -= a;
+	this.angle += a;
 };
 
 MyDrone.prototype.moveFoward = function(a)
@@ -65,17 +85,37 @@ MyDrone.prototype.moveDown = function(a)
 	this.y -=(a/10);
 };
 
-MyDrone.prototype.moveUpdate = function()
+MyDrone.prototype.moveUpdate = function(currTime)
 {
-	this.helix_back.updateMove(1);
-	this.helix_front.updateMove(1);
-	this.helix_sides.updateMove(1);
+	this.helix_back.updateMove(this.back_helix_speed/this.scene.scale_rotors, currTime);//??
+	this.helix_front.updateMove(this.front_helix_speed/this.scene.scale_rotors, currTime);//??
+	this.helix_sides.updateMove(this.sides_helix_speed/this.scene.scale_rotors, currTime);//??
+};
+
+MyDrone.prototype.update_helix_speeds = function(front, back, sides)
+{
+	this.front_helix_speed = front;
+	this.back_helix_speed = back;
+	this.sides_helix_speed = sides;
+};
+
+MyDrone.prototype.update_pitch_angle = function(angle)
+{
+	if(angle == 0)
+		this.pitch_angle = angle;
+	if(this.pitch_angle < 20)
+		if(this.pitch_angle > -20)
+			this.pitch_angle += angle;
 };
 
 MyDrone.prototype.display = function()
 {
+	
 	this.scene.materialDefault.apply();
 	//frame
+	
+	this.scene.rotate(this.pitch_angle*degToRad, 1, 0, 0);
+	
 	this.scene.pushMatrix();
 		this.scene.translate(0, 0, -4.5/2);
 		this.scene.scale(0.11,0.11,4.5);
@@ -123,7 +163,7 @@ MyDrone.prototype.display = function()
 		this.scene.rotate(-90*degToRad, 1, 0, 0);
 		this.scene.translate(0, 0, -0.2);
 		this.scene.scale(0.75,0.75,0.75);
-		this.dealwithdoge.apply();
+		this.bodyTextures[this.scene.currDroneAppearance].apply();
 		this.sphere.display();
 		this.scene.materialDefault.apply();
 	this.scene.popMatrix();
@@ -193,28 +233,28 @@ MyDrone.prototype.display = function()
 	
 	//helix front
 	this.scene.pushMatrix();
-		this.scene.translate(0, 0.40, -2.8);
-		this.scene.scale(0.09,0.03,1.6);
+		this.scene.translate(0, 0.40, -2.8 +1.6/2);
+		//this.scene.scale(0.09,0.03,1.6);
 		this.helix_front.display();
 	this.scene.popMatrix();
 	
 	//helix back
 	this.scene.pushMatrix();
-		this.scene.translate(0, 0.40, 2.8-1.6);
-		this.scene.scale(0.09,0.03, 1.6);
+		this.scene.translate(0, 0.40, 2.8-1.6 +1.6/2);
+		//this.scene.scale(0.09,0.03, 1.6);
 		this.helix_back.display();
 	this.scene.popMatrix();
 	
 	//helix sides
 	this.scene.pushMatrix();
-		this.scene.translate(2.8-1.6/2, 0.40, -1.6/2);
-		this.scene.scale(0.09,0.03, 1.6);
+		this.scene.translate(2.8-1.6/2, 0.40, 0);
+		//this.scene.scale(0.09,0.03, 1.6);
 		this.helix_sides.display();
 	this.scene.popMatrix();
 	
 	this.scene.pushMatrix();
-		this.scene.translate(-2.8+1.6/2, 0.40, -1.6/2);
-		this.scene.scale(0.09,0.03, 1.6);
+		this.scene.translate(-2.8+1.6/2, 0.40, 0);
+		//this.scene.scale(0.09,0.03, 1.6);
 		this.helix_sides.display();
 	this.scene.popMatrix();
 	

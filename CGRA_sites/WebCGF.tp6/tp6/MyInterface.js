@@ -57,6 +57,8 @@ MyInterface.prototype.init = function(application) {
 	// min and max values can be specified as parameters
 	
 	this.gui.add(this.scene, 'speed', -5, 5);
+	
+	this.gui.add(this.scene, 'scale_rotors', 0.1, 2);
 
 	return true;
 };
@@ -78,21 +80,27 @@ MyInterface.prototype.processKeyboard = function(event) {
 		case (97)://a
 		case (65)://A
 			this.scene.drone.rotateLeft(this.scene.speed);
+			this.scene.drone.update_helix_speeds(10, 10, -0.2);//??
 			break;
 				
 		case(68)://D
 		case(100)://d
 			this.scene.drone.rotateRight(this.scene.speed);
+			this.scene.drone.update_helix_speeds(10, 10, -0.2);//??
 			break;
 					
 		case(87)://W
 		case(119)://w
 			this.scene.drone.moveFoward(this.scene.speed);
+			this.scene.drone.update_helix_speeds(0.2, 10, -1);
+			this.scene.drone.update_pitch_angle(3);
 			break;
 					
 		case(83)://S
 		case(115)://s
 			this.scene.drone.moveBackwards(this.scene.speed);
+			this.scene.drone.update_helix_speeds(10, 0.2, -1);
+			this.scene.drone.update_pitch_angle(-3);
 			break;
 			
 		case(73)://I
@@ -104,5 +112,42 @@ MyInterface.prototype.processKeyboard = function(event) {
 		case(106)://j
 			this.scene.drone.moveDown(this.scene.speed);
 			break;
+		
+		default:
+			this.scene.drone.update_helix_speeds(1, 1, 1);
+			
+	};
+};
+
+MyInterface.prototype.processKeyUp = function (event) {
+	// call CGFinterface default code (omit if you want to override)
+	CGFinterface.prototype.processKeyUp.call(this, event);
+
+	switch (event.keyCode) 
+	{
+		case (97)://a
+		case (65)://A
+			this.scene.drone.update_helix_speeds(1, 1, -1);
+			break;
+				
+		case(68)://D
+		case(100)://d
+			this.scene.drone.update_helix_speeds(1, 1, -1);
+			break;
+					
+		case(87)://W
+		case(119)://w
+			this.scene.drone.update_helix_speeds(1, 1, -1);
+			this.scene.drone.update_pitch_angle(0);
+			break;
+					
+		case(83)://S
+		case(115)://s
+			this.scene.drone.update_helix_speeds(1, 1, -1);
+			this.scene.drone.update_pitch_angle(0);
+			break;
+		
+		//default:
+			//this.scene.drone.update_helix_speeds(1, 1, -1);
 	};
 };

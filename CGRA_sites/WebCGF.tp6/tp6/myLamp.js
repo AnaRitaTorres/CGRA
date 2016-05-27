@@ -40,7 +40,8 @@ function myLamp(scene, slices, stacks)
 			this.vertices.push(Math.sin(hpi-i*phi)*Math.cos(j*beta), Math.sin(hpi-i*phi)*Math.sin(j*beta), Math.cos(hpi-i*phi));
 			this.normals.push(Math.sin(hpi-i*phi)*Math.cos(j*beta), Math.sin(hpi-i*phi)*Math.sin(j*beta), Math.cos(hpi-i*phi));
 			
-			this.texCoords.push((this.slices-j)/this.slices, (this.stacks-i)/this.stacks);
+			this.texCoords.push(Math.sin(hpi - i * phi) * Math.cos(j * beta) * 0.5 + 0.5,Math.sin(hpi - i * phi) * Math.sin(j * beta) * 0.5 + 0.5);
+			//this.texCoords.push((this.slices-j)/this.slices, (this.stacks-i)/this.stacks);
 		}
 	}
 	
