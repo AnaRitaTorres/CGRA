@@ -31,6 +31,7 @@ function MyDrone(scene,x,y,z,angle)
 	this.pitch_angle = 0;
 	
 	this.bodyTextures = {};
+	this.frameTextures = {};
 	
 	this.doge = new CGFappearance(this.scene);
 	this.doge.loadTexture("./images/dogev2.png");
@@ -41,9 +42,23 @@ function MyDrone(scene,x,y,z,angle)
 	this.pepe = new CGFappearance(this.scene);
 	this.pepe.loadTexture("./images/pepev2.png");
 	
+		
+	this.green = new CGFappearance(this.scene);
+	this.green.loadTexture("./images/verde.png");
+	
+	this.pink = new CGFappearance(this.scene);
+	this.pink.loadTexture("./images/rosa.png");
+	
+	this.blue = new CGFappearance(this.scene);
+	this.blue.loadTexture("./images/azul.png");
+	
 	this.bodyTextures[0] = this.doge;
 	this.bodyTextures[1] = this.sonic;
 	this.bodyTextures[2] = this.pepe;
+	
+	this.frameTextures[0] = this.green;
+	this.frameTextures[1] = this.blue;
+	this.frameTextures[2] = this.pink;
 	
 	this.texOption = 0;
 		
@@ -108,25 +123,47 @@ MyDrone.prototype.update_pitch_angle = function(angle)
 			this.pitch_angle += angle;
 };
 
+MyDrone.prototype.changeColor = function(currDroneAppearance)
+{
+	if (currDroneAppearance == 0)
+	{
+		this.frameTextures[1].apply();
+	}
+	
+	else if (currDroneAppearance == 1)
+	{
+		this.frameTextures[2].apply();
+	}
+	else
+	{
+		this.frameTextures[0].apply();
+	}
+};
+
+
 MyDrone.prototype.display = function()
 {
 	
 	this.scene.materialDefault.apply();
-	//frame
 	
-	this.scene.rotate(this.pitch_angle*degToRad, 1, 0, 0);
+	//frame
+		this.scene.rotate(this.pitch_angle*degToRad, 1, 0, 0);
 	
 	this.scene.pushMatrix();
 		this.scene.translate(0, 0, -4.5/2);
 		this.scene.scale(0.11,0.11,4.5);
+		this.frameTextures[this.scene.currDroneAppearance].apply();
 		this.cylinder.display();
+		this.scene.materialDefault.apply();
 	this.scene.popMatrix();
 	
 	this.scene.pushMatrix();
 		this.scene.rotate(90*degToRad, 0, 1, 0);
 		this.scene.translate(0, 0, -4.5/2);
 		this.scene.scale(0.11,0.11,4.5);
+		this.frameTextures[this.scene.currDroneAppearance].apply();
 		this.cylinder.display();
+		this.scene.materialDefault.apply();
 	this.scene.popMatrix();
 	
 	//helice support
@@ -134,28 +171,36 @@ MyDrone.prototype.display = function()
 		this.scene.rotate(-90*degToRad, 1, 0, 0);
 		this.scene.translate(4/2, 0, 0);
 		this.scene.scale(0.2,0.2,0.3);
+		this.frameTextures[this.scene.currDroneAppearance].apply();
 		this.cylinder.display();
+		this.scene.materialDefault.apply();
 	this.scene.popMatrix();
 	
 	this.scene.pushMatrix();
 		this.scene.rotate(-90*degToRad, 1, 0, 0);
 		this.scene.translate(-4/2, 0, 0);
 		this.scene.scale(0.2,0.2,0.3);
+		this.frameTextures[this.scene.currDroneAppearance].apply();
 		this.cylinder.display();
+		this.scene.materialDefault.apply();
 	this.scene.popMatrix();
 
 	this.scene.pushMatrix();
 		this.scene.rotate(-90*degToRad, 1, 0, 0);
 		this.scene.translate(0, 4/2, 0);
 		this.scene.scale(0.2,0.2,0.3);
+		this.frameTextures[this.scene.currDroneAppearance].apply();
 		this.cylinder.display();
+		this.scene.materialDefault.apply();
 	this.scene.popMatrix();
 
 	this.scene.pushMatrix();
 		this.scene.rotate(-90*degToRad, 1, 0, 0);
 		this.scene.translate(0, -4/2, 0);
 		this.scene.scale(0.2,0.2,0.3);
+		this.frameTextures[this.scene.currDroneAppearance].apply();
 		this.cylinder.display();
+		this.scene.materialDefault.apply();
 	this.scene.popMatrix();
 	
 	//semi sphere
@@ -173,32 +218,41 @@ MyDrone.prototype.display = function()
 		this.scene.rotate(90*degToRad, 1, 0, 0);
 		this.scene.translate(0, 0, 0.2);
 		this.scene.scale(0.75,0.75,1);
+		this.frameTextures[this.scene.currDroneAppearance].apply();
 		this.circle.display();
+		this.scene.materialDefault.apply();
 	this.scene.popMatrix();
 	
 	//drone legs
 	this.scene.pushMatrix();
 		this.scene.translate(0, -0.8, 0.4);
 		this.scene.scale(0.7,0.7,0.15);
+		this.frameTextures[this.scene.currDroneAppearance].apply();
 		this.halfc.display();
+		this.scene.materialDefault.apply();
 	this.scene.popMatrix();
 	
 	this.scene.pushMatrix();
 		this.scene.translate(0, -0.8, -0.4-0.15);
 		this.scene.scale(0.7,0.7,0.15);
+		this.frameTextures[this.scene.currDroneAppearance].apply();
 		this.halfc.display();
+		this.scene.materialDefault.apply();
 	this.scene.popMatrix();
 	
 	//drone feet
 	this.scene.pushMatrix();
 		this.scene.translate(0.7, -0.8, 0);
 		this.scene.scale(0.2,0.1,1.5);
+		this.changeColor(this.scene.currDroneAppearance);
 		this.cube.display();
+		this.scene.materialDefault.apply();
 	this.scene.popMatrix();
 	
 	this.scene.pushMatrix();
 		this.scene.translate(-0.7, -0.8, 0);
 		this.scene.scale(0.2,0.1,1.5);
+		this.changeColor(this.scene.currDroneAppearance);
 		this.cube.display();
 	this.scene.popMatrix();
 	
@@ -207,55 +261,71 @@ MyDrone.prototype.display = function()
 		this.scene.translate(2, 0.3, 0);
 		this.scene.rotate(-90*degToRad, 1, 0, 0);
 		this.scene.scale(0.2,0.2,0.2);
+		this.frameTextures[this.scene.currDroneAppearance].apply();
 		this.sphere.display();
+		this.scene.materialDefault.apply();
 	this.scene.popMatrix();
 	
 	this.scene.pushMatrix();
 		this.scene.translate(-2, 0.3, 0);
 		this.scene.rotate(-90*degToRad, 1, 0, 0);
 		this.scene.scale(0.2,0.2,0.2);
+		this.frameTextures[this.scene.currDroneAppearance].apply();
 		this.sphere.display();
+		this.scene.materialDefault.apply();
 	this.scene.popMatrix();
 	
 	this.scene.pushMatrix();
 		this.scene.translate(0, 0.3, 2);
 		this.scene.rotate(-90*degToRad, 1, 0, 0);
 		this.scene.scale(0.2,0.2,0.2);
+		this.frameTextures[this.scene.currDroneAppearance].apply();
 		this.sphere.display();
+		this.scene.materialDefault.apply();
 	this.scene.popMatrix();
 	
 	this.scene.pushMatrix();
 		this.scene.translate(0, 0.3, -2);
 		this.scene.rotate(-90*degToRad, 1, 0, 0);
 		this.scene.scale(0.2,0.2,0.2);
+		this.frameTextures[this.scene.currDroneAppearance].apply();
 		this.sphere.display();
+		this.scene.materialDefault.apply();
 	this.scene.popMatrix();
 	
 	//helix front
 	this.scene.pushMatrix();
 		this.scene.translate(0, 0.40, -2.8 +1.6/2);
 		//this.scene.scale(0.09,0.03,1.6);
+		this.changeColor(this.scene.currDroneAppearance);
 		this.helix_front.display();
+		this.scene.materialDefault.apply();
 	this.scene.popMatrix();
 	
 	//helix back
 	this.scene.pushMatrix();
 		this.scene.translate(0, 0.40, 2.8-1.6 +1.6/2);
 		//this.scene.scale(0.09,0.03, 1.6);
+		this.changeColor(this.scene.currDroneAppearance);
 		this.helix_back.display();
+		this.scene.materialDefault.apply();
 	this.scene.popMatrix();
 	
 	//helix sides
 	this.scene.pushMatrix();
 		this.scene.translate(2.8-1.6/2, 0.40, 0);
 		//this.scene.scale(0.09,0.03, 1.6);
+		this.changeColor(this.scene.currDroneAppearance);
 		this.helix_sides.display();
+		this.scene.materialDefault.apply();
 	this.scene.popMatrix();
 	
 	this.scene.pushMatrix();
 		this.scene.translate(-2.8+1.6/2, 0.40, 0);
 		//this.scene.scale(0.09,0.03, 1.6);
+		this.changeColor(this.scene.currDroneAppearance);
 		this.helix_sides.display();
+		this.scene.materialDefault.apply();
 	this.scene.popMatrix();
 	
 	

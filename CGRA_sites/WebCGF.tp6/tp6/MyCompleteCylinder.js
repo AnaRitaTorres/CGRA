@@ -19,10 +19,9 @@ MyCompleteCylinder.prototype.constructor=MyCompleteCylinder;
 
 MyCompleteCylinder.prototype.display = function()
 {
-	this.scene.droneAppearance2.apply();
-	this.cylinder.display();
-	this.scene.materialDefault.apply();
 	
+	this.cylinder.display();
+		
 	this.scene.pushMatrix();
 		this.scene.translate(0, 0, 1);
 		this.circle.display();

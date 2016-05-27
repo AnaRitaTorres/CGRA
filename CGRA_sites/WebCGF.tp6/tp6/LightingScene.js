@@ -54,39 +54,11 @@ LightingScene.prototype.init = function(application) {
 	
 	//Appearances
 	//Drone
-	
-	this.droneAppearance1 = new CGFappearance(this);
-	/*this.droneAppearance1.setAmbient(.5,.5,.5,1);
-	this.droneAppearance1.setDiffuse(1,1,1,1);	
-	this.droneAppearance1.setSpecular(1,1,1,1);
-	this.droneAppearance1.setShininess(500);*/
-	this.droneAppearance1.loadTexture("./images/amarelo.png");
-	this.droneAppearance1.setTextureWrap('CLAMP_TO_EDGE','CLAMP_TO_EDGE');
-	
-	this.droneAppearance2 = new CGFappearance(this);
-	this.droneAppearance2.loadTexture("./images/verde.png");
-	
-	this.droneAppearance3 = new CGFappearance(this);
-	this.droneAppearance3.loadTexture("./images/rosa.png");
-	
-	this.droneAppearance4 = new CGFappearance(this);
-	this.droneAppearance4.loadTexture ("./images/azul.png");
-	
-	
 	this.droneAppearanceList={};
 	this.droneAppearanceList['Doge'] = 0;
 	this.droneAppearanceList['Sonic'] = 1;
 	this.droneAppearanceList['Pepe'] = 2;
 	
-	//this.droneAppearanceList=['Doge', 'Sonic', 'Pepe'];
-	
-	
-	/*
-	this.droneAppearances = {};
-	this.droneAppearances[0] = this.droneAppearance1;
-	this.droneAppearances[1] = this.droneAppearance2;
-	this.droneAppearances[2] = this.droneAppearance3;
-	*/
 	this.currDroneAppearance= 0;
 	
 	
