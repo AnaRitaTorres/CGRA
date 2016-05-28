@@ -13,9 +13,20 @@ function MyBomb(scene) {
 	this.tnt = new CGFappearance(this.scene);
 	this.tnt.loadTexture("./images/tnt.png");
 	
-	this.x = 0;
-	this.y = 0;
-	this.z = 0;
+	this.paper = new CGFappearance(this.scene);
+	this.paper.loadTexture("./images/papel.png");
+	
+	this.bombTextures = {};
+	
+	this.bombTextures[0] = this.paper;
+	this.bombTextures[1] = this.tnt;
+	
+	
+	this.x = 3;
+	this.y = 3;
+	this.z = 3;
+	
+	this.attached = 0;
 	
 };
 
@@ -38,7 +49,7 @@ MyBomb.prototype.display = function()
 {
 	this.scene.pushMatrix();
 		this.scene.translate(this.x, this.y - 1/2, this.z);
-		this.tnt.apply();
+		this.bombTextures[this.attached].apply();
 		this.cube.display();
 		this.scene.materialDefault.apply();
 	this.scene.popMatrix();

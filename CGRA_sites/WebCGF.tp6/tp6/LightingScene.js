@@ -103,7 +103,7 @@ LightingScene.prototype.init = function(application) {
 	
 	this.enableTextures(true);
 		
-	this.setUpdatePeriod(1);
+	this.setUpdatePeriod(10);
 };
 
 
@@ -204,6 +204,12 @@ LightingScene.prototype.update = function(currTime)
 	}
 	
 	this.drone.moveUpdate(currTime);
+	
+	this.drone.checkCollision();
+	
+	this.drone.moveBomb();
+	
+	
 }
 
 
@@ -228,7 +234,7 @@ LightingScene.prototype.display = function() {
 	this.axis.display();
 
 	this.materialDefault.apply();
-/*
+
 	//Geometric Tranformations	
 	// Floor
 	this.pushMatrix();
@@ -293,7 +299,7 @@ LightingScene.prototype.display = function() {
 		this.scale(0.6,0.6,0.2);
 		this.clock.display();
 	this.popMatrix();
-	*/
+	
 	
 	
 	//Drone

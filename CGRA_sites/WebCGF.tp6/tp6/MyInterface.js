@@ -122,10 +122,7 @@ MyInterface.prototype.processKeyboard = function(event) {
 		case(108)://l
 			this.scene.drone.update_rope(this.scene.speed);
 			break;
-		
-		
-		default:
-			this.scene.drone.update_helix_speeds(1, 1, 1);
+	
 			
 	};
 };

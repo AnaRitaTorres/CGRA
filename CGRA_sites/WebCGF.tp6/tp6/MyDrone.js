@@ -60,7 +60,8 @@ function MyDrone(scene,x,y,z,angle)
 	this.frameTextures[1] = this.blue;
 	this.frameTextures[2] = this.pink;
 	
-	this.texOption = 0;
+	
+
 		
 };
 
@@ -125,9 +126,9 @@ MyDrone.prototype.update_pitch_angle = function(angle)
 
 MyDrone.prototype.update_rope = function(speed)
 {
-	if(this.cable.lenght + (speed/50) > 1)
-		if(this.cable.lenght + (speed/50) < 5)
-			this.cable.lenght +=  speed/50;
+	if(this.cable.length + (speed/50) > 1)
+		if(this.cable.length + (speed/50) < 5)
+			this.cable.length +=  speed/50;
 }
 
 MyDrone.prototype.getHookPos = function()
@@ -136,11 +137,43 @@ MyDrone.prototype.getHookPos = function()
 	//x
 	this.coords[0] = this.x;
 	//y
-	this.coords[1] = this.y - this.cable.lenght + 0.25;
+	this.coords[1] = this.y - this.cable.length - 0.25;
 	//z
 	this.coords[2] = this.z;
 	
 	return this.coords;
+}
+
+MyDrone.prototype.checkCollision = function()
+{
+	var hookPos = this.getHookPos();
+	var bombPos = this.scene.bomb.getPos();
+	
+	if((bombPos[0] - 0.5) < hookPos[0])
+		if((bombPos[0] + 0.5) > hookPos[0])
+			if((bombPos[2] - 0.5) < hookPos[2])
+				if((bombPos[2] + 0.5) > hookPos[2])
+					if((bombPos[1] - 0.5) < hookPos[1])
+						if(bombPos[1] + 0.2> hookPos[1])
+						{
+							this.scene.bomb.attached = 1;
+							return;
+						}
+	
+	this.scene.bomb.attached = 0;
+}
+
+MyDrone.prototype.moveBomb = function()
+{
+	var hookPos = this.getHookPos();
+	
+	if(this.scene.bomb.attached == 1)
+	{
+		this.scene.bomb.x = hookPos[0];
+		this.scene.bomb.y = hookPos[1];
+		this.scene.bomb.z = hookPos[2];
+	}
+		
 }
 
 MyDrone.prototype.changeColor = function(currDroneAppearance)
@@ -163,7 +196,7 @@ MyDrone.prototype.changeColor = function(currDroneAppearance)
 
 MyDrone.prototype.display = function()
 {
-	
+
 	this.scene.materialDefault.apply();
 	
 	//cable hook
