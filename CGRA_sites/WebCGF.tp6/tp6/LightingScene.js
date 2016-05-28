@@ -50,7 +50,8 @@ LightingScene.prototype.init = function(application) {
 	this.lwall = new MyQuad(this,1.5,-0.5,1.5,-0.5);
 	this.clock = new MyClock(this,12);
 	this.drone = new MyDrone(this,7.5,6,7.5,180);
-	this.bomb = new MyBomb(this);
+	this.bomb = new MyBomb(this, 3, 0, 3);
+	this.pod = new MyPod(this, 100, 1, 10, 3);
 	
 	//Appearances
 	//Drone
@@ -196,6 +197,24 @@ LightingScene.prototype.updateLights = function(){
 	else this.lights[4].disable();
 }
 
+LightingScene.prototype.checkLanding = function()
+{
+	var podPos = this.pod.getPos();
+	var bombPos = this.bomb.getPos();
+	
+	//width of square inside pod surface
+	var w = Math.sqrt(2);
+	
+	if(podPos[0] - w < bombPos[0])
+		if(podPos[0] + w > bombPos[0])
+			if(podPos[2] - w < bombPos[2])
+				if(podPos[2] + w > bombPos[2])
+					if(podPos[1] - 0.2 < bombPos[1] -1)
+						if(podPos[1] + 0.2 > bombPos[1] -1)
+							this.bomb.attached = 2;
+					
+}
+
 LightingScene.prototype.update = function(currTime) 
 {
 	if(this.enableClock == true)
@@ -208,6 +227,8 @@ LightingScene.prototype.update = function(currTime)
 	this.drone.checkCollision();
 	
 	this.drone.moveBomb();
+	
+	this.checkLanding();
 	
 	
 }
@@ -234,7 +255,7 @@ LightingScene.prototype.display = function() {
 	this.axis.display();
 
 	this.materialDefault.apply();
-
+/*
 	//Geometric Tranformations	
 	// Floor
 	this.pushMatrix();
@@ -299,18 +320,24 @@ LightingScene.prototype.display = function() {
 		this.scale(0.6,0.6,0.2);
 		this.clock.display();
 	this.popMatrix();
-	
+	*/
 	
 	
 	//Drone
 	this.pushMatrix();
 		this.translate(this.drone.x, this.drone.y, this.drone.z);
 		this.rotate(this.drone.angle * degToRad,0,1,0);
-		//this.droneAppearance1.apply();
 		this.drone.display();
 	this.popMatrix();
 	
-	this.bomb.display();
+	//Bomb
+	this.pushMatrix();
+		this.bomb.display();
+	this.popMatrix();
 	
+	//Landing Pod
+	this.pushMatrix();
+		this.pod.display();
+	this.popMatrix();
 	
 };

@@ -23,6 +23,7 @@ serialInclude([
 	'MyHook.js',
 	'MyCable.js',
 	'MyBomb.js',
+	'MyPod.js',
 
 	main=function() {
 		var app = new CGFapplication(document.body);

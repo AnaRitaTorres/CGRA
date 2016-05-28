@@ -5,7 +5,7 @@
  */
 var degToRad = Math.PI / 180.0;
  
-function MyBomb(scene) {
+function MyBomb(scene, x, y, z) {
 	CGFobject.call(this,scene);
 	
 	this.cube = new MyUnitCubeQuad(this.scene);
@@ -20,11 +20,12 @@ function MyBomb(scene) {
 	
 	this.bombTextures[0] = this.paper;
 	this.bombTextures[1] = this.tnt;
+	this.bombTextures[2] = this.tnt;
 	
 	
-	this.x = 3;
-	this.y = 3;
-	this.z = 3;
+	this.x = x;
+	this.y = y;
+	this.z = z;
 	
 	this.attached = 0;
 	

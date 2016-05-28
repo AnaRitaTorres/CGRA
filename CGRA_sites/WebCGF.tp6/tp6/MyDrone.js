@@ -155,17 +155,17 @@ MyDrone.prototype.checkCollision = function()
 				if((bombPos[2] + 0.5) > hookPos[2])
 					if((bombPos[1] - 0.5) < hookPos[1])
 						if(bombPos[1] + 0.2> hookPos[1])
-						{
-							this.scene.bomb.attached = 1;
-							return;
-						}
-	
-	this.scene.bomb.attached = 0;
+							if(this.scene.bomb.attached == 0)
+								this.scene.bomb.attached = 1;
+					
 }
+
+
 
 MyDrone.prototype.moveBomb = function()
 {
 	var hookPos = this.getHookPos();
+	var podPos = this.scene.pod.getPos();
 	
 	if(this.scene.bomb.attached == 1)
 	{
@@ -173,6 +173,14 @@ MyDrone.prototype.moveBomb = function()
 		this.scene.bomb.y = hookPos[1];
 		this.scene.bomb.z = hookPos[2];
 	}
+	
+	if(this.scene.bomb.attached == 2)
+	{
+		this.scene.bomb.x = podPos[0];
+		this.scene.bomb.y = podPos[1] + 1;
+		this.scene.bomb.z = podPos[2];
+	}
+	
 		
 }
 
