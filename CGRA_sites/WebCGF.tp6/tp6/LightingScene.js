@@ -50,14 +50,14 @@ LightingScene.prototype.init = function(application) {
 	this.lwall = new MyQuad(this,1.5,-0.5,1.5,-0.5);
 	this.clock = new MyClock(this,12);
 	this.drone = new MyDrone(this,7.5,6,7.5,180);
-	
+	this.bomb = new MyBomb(this);
 	
 	//Appearances
 	//Drone
 	this.droneAppearanceList={};
-	this.droneAppearanceList['Doge'] = 0;
-	this.droneAppearanceList['Sonic'] = 1;
-	this.droneAppearanceList['Pepe'] = 2;
+	this.droneAppearanceList['1.Doge'] = 0;
+	this.droneAppearanceList['2.Sonic'] = 1;
+	this.droneAppearanceList['3.Pepe'] = 2;
 	
 	this.currDroneAppearance= 0;
 	
@@ -228,7 +228,7 @@ LightingScene.prototype.display = function() {
 	this.axis.display();
 
 	this.materialDefault.apply();
-
+/*
 	//Geometric Tranformations	
 	// Floor
 	this.pushMatrix();
@@ -293,7 +293,7 @@ LightingScene.prototype.display = function() {
 		this.scale(0.6,0.6,0.2);
 		this.clock.display();
 	this.popMatrix();
-	
+	*/
 	
 	
 	//Drone
@@ -304,7 +304,7 @@ LightingScene.prototype.display = function() {
 		this.drone.display();
 	this.popMatrix();
 	
-
+	this.bomb.display();
 	
 	
 };

@@ -9,7 +9,6 @@ var degToRad = Math.PI / 180.0;
 function MyDrone(scene,x,y,z,angle) 
  {
  	CGFobject.call(this,scene);
-	
 	this.x=x;
 	this.y=y;
 	this.z=z;
@@ -23,6 +22,7 @@ function MyDrone(scene,x,y,z,angle)
 	this.helix_front = new MyHelix(this.scene, 20, 1);
 	this.helix_back = new MyHelix(this.scene, 20, 1);
 	this.helix_sides = new MyHelix(this.scene, 20, 1);
+	this.cable = new MyCable(this.scene);
 	
 	this.front_helix_speed = 1;
 	this.back_helix_speed = 1;
@@ -123,6 +123,26 @@ MyDrone.prototype.update_pitch_angle = function(angle)
 			this.pitch_angle += angle;
 };
 
+MyDrone.prototype.update_rope = function(speed)
+{
+	if(this.cable.lenght + (speed/50) > 1)
+		if(this.cable.lenght + (speed/50) < 5)
+			this.cable.lenght +=  speed/50;
+}
+
+MyDrone.prototype.getHookPos = function()
+{
+	this.coords = {};
+	//x
+	this.coords[0] = this.x;
+	//y
+	this.coords[1] = this.y - this.cable.lenght + 0.25;
+	//z
+	this.coords[2] = this.z;
+	
+	return this.coords;
+}
+
 MyDrone.prototype.changeColor = function(currDroneAppearance)
 {
 	if (currDroneAppearance == 0)
@@ -146,9 +166,15 @@ MyDrone.prototype.display = function()
 	
 	this.scene.materialDefault.apply();
 	
-	//frame
-		this.scene.rotate(this.pitch_angle*degToRad, 1, 0, 0);
+	//cable hook
+	this.scene.pushMatrix();
+		this.cable.display();
+	this.scene.popMatrix();
 	
+	this.scene.rotate(this.pitch_angle*degToRad, 1, 0, 0);
+	
+	
+	//frame
 	this.scene.pushMatrix();
 		this.scene.translate(0, 0, -4.5/2);
 		this.scene.scale(0.11,0.11,4.5);
@@ -327,6 +353,8 @@ MyDrone.prototype.display = function()
 		this.helix_sides.display();
 		this.scene.materialDefault.apply();
 	this.scene.popMatrix();
+	
+	
 	
 	
 }

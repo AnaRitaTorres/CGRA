@@ -93,14 +93,14 @@ MyInterface.prototype.processKeyboard = function(event) {
 		case(119)://w
 			this.scene.drone.moveFoward(this.scene.speed);
 			this.scene.drone.update_helix_speeds(0.2, 10, -1);
-			this.scene.drone.update_pitch_angle(3);
+			this.scene.drone.update_pitch_angle(2);
 			break;
 					
 		case(83)://S
 		case(115)://s
 			this.scene.drone.moveBackwards(this.scene.speed);
 			this.scene.drone.update_helix_speeds(10, 0.2, -1);
-			this.scene.drone.update_pitch_angle(-3);
+			this.scene.drone.update_pitch_angle(-2);
 			break;
 			
 		case(73)://I
@@ -112,6 +112,17 @@ MyInterface.prototype.processKeyboard = function(event) {
 		case(106)://j
 			this.scene.drone.moveDown(this.scene.speed);
 			break;
+		
+		case(80)://P
+		case(112)://p
+			this.scene.drone.update_rope(-this.scene.speed);
+			break;
+			
+		case(76)://L
+		case(108)://l
+			this.scene.drone.update_rope(this.scene.speed);
+			break;
+		
 		
 		default:
 			this.scene.drone.update_helix_speeds(1, 1, 1);
