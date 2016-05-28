@@ -47,10 +47,10 @@ LightingScene.prototype.init = function(application) {
 	this.table = new MyTable(this);
 	this.wall = new Plane(this);
 	this.floor = new MyQuad(this, 0, 1.5*10, 0, 1.0*12);
-	this.lwall = new MyQuad(this,1.5,-0.5,1.5,-0.5);
+	this.lwall = new MyQuad(this,1.5,-0.5,-0.5,1.5);
 	this.clock = new MyClock(this,12);
 	this.drone = new MyDrone(this,7.5,6,7.5,180);
-	this.bomb = new MyBomb(this, 3, 0, 3);
+	this.bomb = new MyBomb(this, 3, 1, 3);
 	this.pod = new MyPod(this, 100, 1, 10, 3);
 	
 	//Appearances

@@ -48,8 +48,12 @@ MyBomb.prototype.getPos = function()
 }
 MyBomb.prototype.display = function()
 {
+
+	
 	this.scene.pushMatrix();
-		this.scene.translate(this.x, this.y+0.5, this.z);
+		this.scene.translate(this.x, this.y-0.5, this.z);
+		if(this.attached == 1)
+			this.scene.rotate(this.scene.drone.angle*degToRad, 0, 1, 0);
 		this.bombTextures[this.attached].apply();
 		this.cube.display();
 		this.scene.materialDefault.apply();

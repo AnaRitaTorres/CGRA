@@ -12,7 +12,7 @@ function MyPod(scene, slices,stacks, x, z) {
 	this.circle = new MyCircle(this.scene, slices);
 	
 	this.shield = new CGFappearance(this.scene);
-	this.shield.loadTexture("./images/shield.png");
+	this.shield.loadTexture("./images/shieldv2.png");
 	
 	
 	this.hydra = new CGFappearance(this.scene);
