@@ -255,7 +255,7 @@ LightingScene.prototype.display = function() {
 	this.axis.display();
 
 	this.materialDefault.apply();
-/*
+
 	//Geometric Tranformations	
 	// Floor
 	this.pushMatrix();
@@ -320,7 +320,7 @@ LightingScene.prototype.display = function() {
 		this.scale(0.6,0.6,0.2);
 		this.clock.display();
 	this.popMatrix();
-	*/
+	
 	
 	
 	//Drone

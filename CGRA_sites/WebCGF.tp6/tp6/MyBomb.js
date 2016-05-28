@@ -49,7 +49,7 @@ MyBomb.prototype.getPos = function()
 MyBomb.prototype.display = function()
 {
 	this.scene.pushMatrix();
-		this.scene.translate(this.x, this.y - 1/2, this.z);
+		this.scene.translate(this.x, this.y+0.5, this.z);
 		this.bombTextures[this.attached].apply();
 		this.cube.display();
 		this.scene.materialDefault.apply();
