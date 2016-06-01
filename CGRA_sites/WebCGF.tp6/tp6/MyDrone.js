@@ -21,7 +21,8 @@ function MyDrone(scene,x,y,z,angle)
 	this.cube = new MyUnitCubeQuad(this.scene);
 	this.helix_front = new MyHelix(this.scene, 20, 1);
 	this.helix_back = new MyHelix(this.scene, 20, 1);
-	this.helix_sides = new MyHelix(this.scene, 20, 1);
+	this.helix_left = new MyHelix(this.scene, 20, 1);
+	this.helix_right = new MyHelix(this.scene, 20, 1);
 	this.cable = new MyCable(this.scene);
 	
 	this.front_helix_speed = 1;
@@ -69,66 +70,133 @@ function MyDrone(scene,x,y,z,angle)
 MyDrone.prototype = Object.create(CGFobject.prototype);
 MyDrone.prototype.constructor=MyDrone;
 
-MyDrone.prototype.rotateRight = function(a)
+
+MyDrone.prototype.helix_moveUpdate = function(currTime)
 {
-	this.angle -= a;
+	//foward
+	if(this.scene.key_w == 1)
+	{
+		this.update_helix_speed(this.helix_front, 0.2);
+		this.update_helix_speed(this.helix_back, 10);
+		this.update_helix_speed(this.helix_left, -1);
+		this.update_helix_speed(this.helix_right, -1);
+	}
+	
+	//backwards
+	if(this.scene.key_s == 1)
+	{
+		this.update_helix_speed(this.helix_front, 10);
+		this.update_helix_speed(this.helix_back, 0.2);
+		this.update_helix_speed(this.helix_left, -1);
+		this.update_helix_speed(this.helix_right, -1);
+	}
+	
+	//rotate left
+	if(this.scene.key_a == 1)
+	{
+		this.update_helix_speed(this.helix_front, 0.2);
+		this.update_helix_speed(this.helix_back, 0.2);
+		this.update_helix_speed(this.helix_left, -10);
+		this.update_helix_speed(this.helix_right, -10);
+	}
+	
+	//rotate right
+	if(this.scene.key_d == 1)
+	{
+		this.update_helix_speed(this.helix_front, 0.2);
+		this.update_helix_speed(this.helix_back, 0.2);
+		this.update_helix_speed(this.helix_left, -10);
+		this.update_helix_speed(this.helix_right, -10);
+	}
+	
+	//foward + rotate left
+	if(this.scene.key_w == 1)
+		if(this.scene.key_a == 1)
+		{
+			this.update_helix_speed(this.helix_front, 0.2);
+			this.update_helix_speed(this.helix_back, 10);
+			this.update_helix_speed(this.helix_left, -10);
+			this.update_helix_speed(this.helix_right, -10);
+		}
+	
+	//foward + rotate right
+	if(this.scene.key_w == 1 && this.scene.key_d == 1)
+	{
+		this.update_helix_speed(this.helix_front, 0.2);
+		this.update_helix_speed(this.helix_back, 10);
+		this.update_helix_speed(this.helix_left, -10);
+		this.update_helix_speed(this.helix_right, -10);
+	}
+	
+	//backwards + rotate left
+	if(this.scene.key_s == 1 && this.scene.key_a == 1)
+	{
+		this.update_helix_speed(this.helix_front, 10);
+		this.update_helix_speed(this.helix_back, 0.2);
+		this.update_helix_speed(this.helix_left, -10);
+		this.update_helix_speed(this.helix_right, -10);
+	}
+	
+	//backwards + rotate right
+	if(this.scene.key_s == 1 && this.scene.key_d == 1)
+	{
+		this.update_helix_speed(this.helix_front, 10);
+		this.update_helix_speed(this.helix_back, 0.2);
+		this.update_helix_speed(this.helix_left, -10);
+		this.update_helix_speed(this.helix_right, -10);
+	}
+	
+	//idle
+	if(this.scene.key_s == 0 && this.scene.key_d == 0 && this.scene.key_w == 0 && this.scene.key_a == 0)
+	{
+		this.update_helix_speed(this.helix_front, 1);
+		this.update_helix_speed(this.helix_back, 1);
+		this.update_helix_speed(this.helix_left, -1);
+		this.update_helix_speed(this.helix_right, -1);
+	}
+	
+	this.helix_back.updateMove(this.scene.scale_rotors, currTime);
+	this.helix_front.updateMove(this.scene.scale_rotors, currTime);
+	this.helix_left.updateMove(this.scene.scale_rotors, currTime);
+	this.helix_right.updateMove(this.scene.scale_rotors, currTime);
 };
 
-MyDrone.prototype.rotateLeft = function(a)
+MyDrone.prototype.update_helix_speed = function(helix, velocity)
 {
-	this.angle += a;
-};
-
-MyDrone.prototype.moveFoward = function(a)
-{
-	this.x += Math.sin(degToRad * this.angle)* (a/10);
-	this.z +=  Math.cos(degToRad * this.angle)* (a/10);
-};
-
-MyDrone.prototype.moveBackwards= function(a)
-{
-	this.x -= Math.sin(degToRad * this.angle)* (a/10);
-	this.z -=  Math.cos(degToRad * this.angle)*(a/10);
-};
-
-MyDrone.prototype.moveUp = function(a)
-{
-	this.y += (a/10);
-};
-
-MyDrone.prototype.moveDown = function(a)
-{
-	this.y -=(a/10);
-};
-
-MyDrone.prototype.moveUpdate = function(currTime)
-{
-	this.helix_back.updateMove(this.back_helix_speed/this.scene.scale_rotors, currTime);//??
-	this.helix_front.updateMove(this.front_helix_speed/this.scene.scale_rotors, currTime);//??
-	this.helix_sides.updateMove(this.sides_helix_speed/this.scene.scale_rotors, currTime);//??
-};
-
-MyDrone.prototype.update_helix_speeds = function(front, back, sides)
-{
-	this.front_helix_speed = front;
-	this.back_helix_speed = back;
-	this.sides_helix_speed = sides;
+	helix.velocity = velocity;
 };
 
 MyDrone.prototype.update_pitch_angle = function(angle)
 {
-	if(angle == 0)
-		this.pitch_angle = angle;
-	if(this.pitch_angle < 20)
-		if(this.pitch_angle > -20)
+	if(this.scene.key_w == 1)
+		if(this.pitch_angle < 20)
 			this.pitch_angle += angle;
+		
+	if(this.scene.key_w == 0)
+		if(this.pitch_angle > 0)
+			this.pitch_angle -= angle*3;
+		
+	if(this.scene.key_s == 1)
+		if(this.pitch_angle > -20)
+			this.pitch_angle -= angle;
+		
+	if(this.scene.key_s == 0)
+		if(this.pitch_angle < 0)
+			this.pitch_angle += angle*3;
+		
 };
 
 MyDrone.prototype.update_rope = function(speed)
 {
-	if(this.cable.length + (speed/50) > 1)
-		if(this.cable.length + (speed/50) < 5)
-			this.cable.length +=  speed/50;
+	if(this.scene.key_p == 1)
+		if(this.cable.length -speed/50 > 1)
+			if(this.cable.length -speed/50 < 5)
+				this.cable.length -=  speed/50;
+			
+	if(this.scene.key_l == 1)
+		if(this.cable.length +speed/50 > 1)
+			if(this.cable.length + speed/50 < 5)
+				this.cable.length +=  speed/50;
 }
 
 MyDrone.prototype.getHookPos = function()
@@ -179,9 +247,40 @@ MyDrone.prototype.moveBomb = function()
 		this.scene.bomb.x = podPos[0];
 		this.scene.bomb.y = podPos[1] + 1;
 		this.scene.bomb.z = podPos[2];
+	}	
+}
+
+MyDrone.prototype.updateMove = function(currTime)
+{
+	var a = this.scene.speed/2;
+	
+	if(this.scene.key_w == 1)
+	{
+		this.x += Math.sin(degToRad * this.angle)* (a/10);
+		this.z +=  Math.cos(degToRad * this.angle)* (a/10);
 	}
 	
+	if(this.scene.key_s == 1)
+	{
+		this.x -= Math.sin(degToRad * this.angle)* (a/10);
+		this.z -=  Math.cos(degToRad * this.angle)* (a/10);
+	}
 		
+	if(this.scene.key_a == 1)
+		this.angle += a*2;
+	
+	if(this.scene.key_d == 1)
+		this.angle -= a*2;
+	
+	if(this.scene.key_i == 1)
+		this.y += a/10;
+	
+	if(this.scene.key_j == 1)
+		this.y -= a/10;
+	
+	this.update_pitch_angle(1);
+	this.update_rope(this.scene.speed);
+	this.helix_moveUpdate(currTime);
 }
 
 MyDrone.prototype.changeColor = function(currDroneAppearance)
@@ -360,43 +459,41 @@ MyDrone.prototype.display = function()
 		this.scene.materialDefault.apply();
 	this.scene.popMatrix();
 	
-	//helix front
+	//helix back
 	this.scene.pushMatrix();
 		this.scene.translate(0, 0.40, -2.8 +1.6/2);
 		//this.scene.scale(0.09,0.03,1.6);
-		this.changeColor(this.scene.currDroneAppearance);
-		this.helix_front.display();
-		this.scene.materialDefault.apply();
-	this.scene.popMatrix();
-	
-	//helix back
-	this.scene.pushMatrix();
-		this.scene.translate(0, 0.40, 2.8-1.6 +1.6/2);
-		//this.scene.scale(0.09,0.03, 1.6);
 		this.changeColor(this.scene.currDroneAppearance);
 		this.helix_back.display();
 		this.scene.materialDefault.apply();
 	this.scene.popMatrix();
 	
-	//helix sides
+	//helix front
+	this.scene.pushMatrix();
+		this.scene.translate(0, 0.40, 2.8-1.6 +1.6/2);
+		//this.scene.scale(0.09,0.03, 1.6);
+		this.changeColor(this.scene.currDroneAppearance);
+		this.helix_front.display();
+		this.scene.materialDefault.apply();
+	this.scene.popMatrix();
+	
+	//helix left
 	this.scene.pushMatrix();
 		this.scene.translate(2.8-1.6/2, 0.40, 0);
 		//this.scene.scale(0.09,0.03, 1.6);
 		this.changeColor(this.scene.currDroneAppearance);
-		this.helix_sides.display();
+		this.helix_left.display();
 		this.scene.materialDefault.apply();
 	this.scene.popMatrix();
 	
+	//helix right
 	this.scene.pushMatrix();
 		this.scene.translate(-2.8+1.6/2, 0.40, 0);
 		//this.scene.scale(0.09,0.03, 1.6);
 		this.changeColor(this.scene.currDroneAppearance);
-		this.helix_sides.display();
+		this.helix_right.display();
 		this.scene.materialDefault.apply();
 	this.scene.popMatrix();
-	
-	
-	
 	
 }
 

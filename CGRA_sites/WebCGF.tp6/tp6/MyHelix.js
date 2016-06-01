@@ -9,6 +9,7 @@ function MyHelix(scene,slices,stacks) {
 	CGFobject.call(this,scene);
     
 	this.angle =0;
+	this.velocity = 1;
     this.helix = new MyCompleteCylinder(this.scene, slices,stacks);
 	
 	this.last_time = 0;
@@ -31,7 +32,7 @@ MyHelix.prototype.display = function()
 };
 
 
-MyHelix.prototype.updateMove = function(velocity,currTime)
+MyHelix.prototype.updateMove = function(scale, currTime)
 {	
 	this.delta_time = currTime-this.last_time;
 	this.last_time = currTime;
@@ -42,7 +43,7 @@ MyHelix.prototype.updateMove = function(velocity,currTime)
 		this.first = 1;
 	}
 	
-	
-	this.angle = this.angle + degToRad*(360 / (velocity/60) * (this.delta_time / 1000));
-	
+	var v = 1 / this.velocity;
+	this.angle = this.angle + degToRad*(360 / (v/scale/60) * (this.delta_time / 1000));
+	//this.angle = this.angle + degToRad*(360 * (this.velocity/scale/60) * (this.delta_time / 1000));
 }

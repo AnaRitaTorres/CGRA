@@ -56,10 +56,17 @@ MyInterface.prototype.init = function(application) {
 	// this.speed=3;
 	// min and max values can be specified as parameters
 	
-	this.gui.add(this.scene, 'speed', -5, 5);
+	this.gui.add(this.scene, 'speed', 0.1, 5);
 	
 	this.gui.add(this.scene, 'scale_rotors', 0.1, 2);
-
+	
+	this.button_a = false;
+	this.button_s = false;
+	this.button_d = false;
+	this.button_w = false;
+	this.button_i = false;
+	this.button_j = false;
+	
 	return true;
 };
 
@@ -67,9 +74,9 @@ MyInterface.prototype.init = function(application) {
  * processKeyboard
  * @param event {Event}
  */
-MyInterface.prototype.processKeyboard = function(event) {
+MyInterface.prototype.processKeyDown = function(event) {
 	// call CGFinterface default code (omit if you want to override)
-	CGFinterface.prototype.processKeyboard.call(this,event);
+	CGFinterface.prototype.processKeyDown.call(this,event);
 	
 	// Check key codes e.g. here: http://www.asciitable.com/
 	// or use String.fromCharCode(event.keyCode) to compare chars
@@ -79,48 +86,42 @@ MyInterface.prototype.processKeyboard = function(event) {
 	{
 		case (97)://a
 		case (65)://A
-			this.scene.drone.rotateLeft(this.scene.speed);
-			this.scene.drone.update_helix_speeds(10, 10, -0.2);//??
+			this.scene.key_a = true;
 			break;
 				
 		case(68)://D
 		case(100)://d
-			this.scene.drone.rotateRight(this.scene.speed);
-			this.scene.drone.update_helix_speeds(10, 10, -0.2);//??
+			this.scene.key_d = true;
 			break;
 					
 		case(87)://W
 		case(119)://w
-			this.scene.drone.moveFoward(this.scene.speed);
-			this.scene.drone.update_helix_speeds(0.2, 10, -1);
-			this.scene.drone.update_pitch_angle(2);
+			this.scene.key_w = true;
 			break;
 					
 		case(83)://S
 		case(115)://s
-			this.scene.drone.moveBackwards(this.scene.speed);
-			this.scene.drone.update_helix_speeds(10, 0.2, -1);
-			this.scene.drone.update_pitch_angle(-2);
+			this.scene.key_s = true;
 			break;
 			
 		case(73)://I
 		case(105)://i
-			this.scene.drone.moveUp(this.scene.speed);
+			this.scene.key_i = true;
 			break;
 			
 		case(74)://J
 		case(106)://j
-			this.scene.drone.moveDown(this.scene.speed);
+			this.scene.key_j = true;
 			break;
 		
 		case(80)://P
 		case(112)://p
-			this.scene.drone.update_rope(-this.scene.speed);
+			this.scene.key_p = true;
 			break;
 			
 		case(76)://L
 		case(108)://l
-			this.scene.drone.update_rope(this.scene.speed);
+			this.scene.key_l = true;
 			break;
 	
 			
@@ -135,27 +136,44 @@ MyInterface.prototype.processKeyUp = function (event) {
 	{
 		case (97)://a
 		case (65)://A
-			this.scene.drone.update_helix_speeds(1, 1, -1);
+			this.scene.key_a = false;
 			break;
 				
 		case(68)://D
 		case(100)://d
-			this.scene.drone.update_helix_speeds(1, 1, -1);
+			this.scene.key_d = false;
 			break;
 					
 		case(87)://W
 		case(119)://w
-			this.scene.drone.update_helix_speeds(1, 1, -1);
-			this.scene.drone.update_pitch_angle(0);
+			this.scene.key_w = false;
 			break;
 					
 		case(83)://S
 		case(115)://s
-			this.scene.drone.update_helix_speeds(1, 1, -1);
-			this.scene.drone.update_pitch_angle(0);
+			this.scene.key_s = false;
 			break;
 		
-		//default:
-			//this.scene.drone.update_helix_speeds(1, 1, -1);
+		case(73)://I
+		case(105)://i
+			this.scene.key_i = false;
+			break;
+			
+		case(74)://J
+		case(106)://j
+			this.scene.key_j = false;
+			break;
+			
+		case(80)://P
+		case(112)://p
+			this.scene.key_p = false;
+			break;
+			
+		case(76)://L
+		case(108)://l
+			this.scene.key_l = false;
+			break;
+		
+		
 	};
 };

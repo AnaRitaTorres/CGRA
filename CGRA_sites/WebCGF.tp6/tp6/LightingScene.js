@@ -104,6 +104,15 @@ LightingScene.prototype.init = function(application) {
 	
 	this.enableTextures(true);
 		
+	this.key_a = false;
+	this.key_s = false;
+	this.key_d = false;
+	this.key_w = false;
+	this.key_i = false;
+	this.key_j = false;
+	this.key_l = false;
+	this.key_p = false;
+	
 	this.setUpdatePeriod(10);
 };
 
@@ -222,7 +231,9 @@ LightingScene.prototype.update = function(currTime)
 		this.clock.update(currTime);
 	}
 	
-	this.drone.moveUpdate(currTime);
+	//this.drone.moveUpdate(currTime);
+	
+	this.drone.updateMove(currTime);
 	
 	this.drone.checkCollision();
 	
